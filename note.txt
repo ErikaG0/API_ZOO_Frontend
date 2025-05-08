@@ -1,0 +1,67 @@
+ANGULAR
+framework de javaScript posibilita el desarollo
+single page apclication SPA.
+___________________________
+tener instalado
+intalar nodejs.
+comando [npm init --yes]
+__________________
+instalar angular
+[npm i -g @angular/cli]
+ver la version
+[ng version] 
+______________________
+rear un proyecto
+[ng new webZoologico]c
+___________________________
+Ejecutar el proyecto
+[ng serve]
+cada que se creee un proyecto crea por defecto estos archivos
+1.app.component.*: Están relacionados con el componente principal, donde se define la estructura, el estilo y la lógica.
+    [.css] 
+    [.html]
+    estos archivos de le inyectan al index.html
+2.app.config.ts: Se usa para configuraciones generales y constantes.
+3.app.component.spec.ts: Se usa para pruebas unitarias de AppComponent.
+4.app.routes.ts: Se utiliza para definir las rutas y navegación entre los componentes de la aplicación.
+________________________________________
+crear un nuevo componente
+[ng g c components/micomponente]
+_________________________________________
+PORQUE SE REQUIERE PROXY
+Angular vive en el puerto 4200 y Express vive en el puerto 3000.
+CORS (Cross-Origin Resource Sharing) que bloquea las solicitudes a puertos o dominios distintos,
+CORS es como un vigilante celoso que dice: "¡No pueden hablar entre ellos! Ustedes están en diferentes casas (puertos), ¡eso está prohibido!"
+Entonces, ¿qué pasa?
+Proxy es como un mensajero que puede saltar de una casa a otra, llevando mensajes de Angular (puerto 4200) a Express (puerto 3000).
+CORS sigue existiendo, pero el proxy le dice al vigilante (CORS): "¡Tranquilo! Yo soy el mensajero, estoy autorizado para pasar". Entonces, CORS permite que el proxy pase sin problemas.
+________________________
+crea un archivo proxy.config
+pone uuna configuracion.
+{
+    "/api/animals":{ 
+        #prefijo el que le de la gana
+        "target":"http://localhost:3000",
+        # le dice al proxy a donde va a redirigir las solicitudes
+        "secure": false,
+        "changeOrigin":false
+
+    }
+    
+}
+
+¿Qué hace changeOrigin?
+false (por defecto):
+El proxy mantiene el Host original, que sería localhost:4200 (el de Angular).
+true:
+El proxy cambia el Host a localhost:3000, que es el servidor real al que le está reenviando la petición.
+
+✔️ El proxy elimina su alias (/tiburones) cuando hacés un pathRewrite.
+y se va al archivo package.son y se agrega
+["start": "ng serve --proxy-config proxy.conf.json",
+____________________
+Ejecutarlo [npm start]
+puede hacer la pruebas
+[curl http://localhost:4200/tiburones/api/animals/all]
+______________________________________
+
