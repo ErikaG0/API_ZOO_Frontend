@@ -37,18 +37,6 @@ Proxy es como un mensajero que puede saltar de una casa a otra, llevando mensaje
 CORS sigue existiendo, pero el proxy le dice al vigilante (CORS): "¡Tranquilo! Yo soy el mensajero, estoy autorizado para pasar". Entonces, CORS permite que el proxy pase sin problemas.
 ________________________
 crea un archivo proxy.config
-pone uuna configuracion.
-{
-    "/api/animals":{ 
-        #prefijo el que le de la gana
-        "target":"http://localhost:3000",
-        # le dice al proxy a donde va a redirigir las solicitudes
-        "secure": false,
-        "changeOrigin":false
-
-    }
-    
-}
 
 ¿Qué hace changeOrigin?
 false (por defecto):
@@ -64,4 +52,22 @@ Ejecutarlo [npm start]
 puede hacer la pruebas
 [curl http://localhost:4200/tiburones/api/animals/all]
 ______________________________________
+Crea un servicio
+[comando ng g s services/animal]
+__________________________________________
+Componente	                                        | Servicio	
+Manejar la interfaz de usuario y las interacciones.	| Gestionar lógica de negocio o acceso a datos.
+___________________________________________
+1.El usuario entra a la app Angular → se carga index.html.
 
+2.Angular inyecta <app-root> → esto carga AppComponent.
+
+3.AppComponent tiene <router-outlet> → muestra AnimalComponent al ir a /inicio.
+
+4.AnimalComponent en su ngOnInit() llama al servicio AnimalService.
+
+5.AnimalService hace una petición HTTP a /api/animals/all.
+
+6.Angular usa proxy.conf.json → redirige a http://localhost:3000/api/animals/all.
+
+7.El backend responde con los datos → Angular los muestra en la tabla.
