@@ -12,15 +12,23 @@ export class AnimalService {
 
 
   //url api
-  apiUri = '/api/animals/all';
+  apiUri = '/api/animals';
   //opciones http
   httpOptions = new HttpHeaders().set('Content-type', 'application/json');
 
   constructor(private http: HttpClient) {}
 
+// Angular service:
+getAllAnimalsData(): Observable<any[]> {
+  return this.http.get<any[]>(this.apiUri + "/all");
+}
 
-  getAllAnimalsData(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUri);
-  }
+newAnimal(data: any): Observable<any> {
+  console.log("ingresaa service");
+  return this.http.post<any>(this.apiUri + "/creation", data, {
+    headers: this.httpOptions,
+  });
+}
+
   
 }
